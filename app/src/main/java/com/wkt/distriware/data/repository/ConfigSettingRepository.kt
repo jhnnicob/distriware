@@ -1,6 +1,7 @@
 package com.wkt.distriware.data.repository
 
 import com.wkt.distriware.domain.model.ConfigSetting
+import kotlinx.coroutines.flow.Flow
 
 /**
  * ## Interface for configuration setting
@@ -25,7 +26,7 @@ import com.wkt.distriware.domain.model.ConfigSetting
  * - The `isConfigSettingValid` method checks if the configuration setting is valid and returns a Boolean value.
  */
 interface ConfigSettingRepository {
-    fun getConfigSetting(): ConfigSetting
-    fun isConfigSettingEmpty(): Boolean
-    fun isConfigSettingValid(): Boolean
+    fun getConfigSetting(): Flow<ConfigSetting>
+    suspend fun saveConfigSetting(key: String, value: String)
+    suspend fun isConfigSettingEmpty(): Flow<Boolean>
 }
