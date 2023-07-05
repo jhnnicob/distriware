@@ -1,9 +1,12 @@
 package com.wkt.distriware.data.repository.impl
 
+import com.wkt.distriware.data.dataStore.ConfigSettingDataStore
 import com.wkt.distriware.data.repository.ConfigSettingRepository
 import com.wkt.distriware.domain.model.ConfigSetting
 
-class ConfigSettingRepositoryImpl: ConfigSettingRepository {
+class ConfigSettingRepositoryImpl @Inject constructor(
+    private val configSettingDataStore: ConfigSettingDataStore
+): ConfigSettingRepository {
 
     private val configSetting = ConfigSetting(
         serverAddress = "192.168.1.12",
