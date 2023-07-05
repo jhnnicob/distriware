@@ -9,6 +9,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.wkt.distriware.ui.compose.NavGraph
 import com.wkt.distriware.ui.theme.DistriwareTheme
+import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * The main activity of the Distriware application.
@@ -52,6 +53,7 @@ import com.wkt.distriware.ui.theme.DistriwareTheme
  *   the appropriate screens based on the user's interaction.
  */
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
