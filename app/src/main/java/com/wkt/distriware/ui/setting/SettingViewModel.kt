@@ -1,13 +1,18 @@
 package com.wkt.distriware.ui.setting
 
 import androidx.lifecycle.ViewModel
-import com.wkt.distriware.domain.usecase.setting.GetConfigSettingUseCase
+import androidx.lifecycle.viewModelScope
+import com.wkt.distriware.domain.usecase.ConfigSettingInteractor
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class SettingViewModel: ViewModel() {
-
-    private val getConfigSettingUseCase = GetConfigSettingUseCase()
+@HiltViewModel
+class SettingViewModel @Inject constructor(
+    private val configSettingInteractor: ConfigSettingInteractor
+): ViewModel() {
 
     private val _serverAddress = MutableStateFlow<String?>(null)
     val serverAddress: StateFlow<String?> = _serverAddress
@@ -20,8 +25,18 @@ class SettingViewModel: ViewModel() {
     }
 
     private fun getConfigSetting() {
-        val configSetting = getConfigSettingUseCase()
-        _serverAddress.value = configSetting.serverAddress ?: "000.000.000.000"
-        _port.value = configSetting.port ?: "000"
+        val configSetting = configSettingInteractor.getConfigSettingUseCase()
+        viewModelScope.launch {
+            configSetting.collect { config ->
+                _serverAddress.value = config.serverAddress ?: "000.000.000.000"
+                _port.value = config.port ?: "000"
+            }
+        }
+    }
+
+    fun saveConfigSetting(key: String, value: String) {
+        viewModelScope.launch {
+            configSettingInteractor.saveConfigSettingUseCase(key, value)
+        }
     }
 }
