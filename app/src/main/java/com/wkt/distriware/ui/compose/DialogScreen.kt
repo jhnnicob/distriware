@@ -23,12 +23,17 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.wkt.distriware.ui.setting.SettingViewModel
 import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
 fun DialogScreen(navController: NavController, fieldName: String, fieldValue: String) {
+
+    val settingViewModel: SettingViewModel = hiltViewModel()
+
     val showDialog = remember { mutableStateOf(false) }
     val textValue = remember { mutableStateOf(TextFieldValue(fieldValue)) }
     val focusRequester = remember { FocusRequester() }
@@ -79,6 +84,7 @@ fun DialogScreen(navController: NavController, fieldName: String, fieldValue: St
         confirmButton = {
             Button(onClick = {
                 showDialog.value = false
+                settingViewModel.saveConfigSetting(fieldName, textValue.value.text)
                 navController.popBackStack()
             }) {
                 Text(text = "Confirm")
