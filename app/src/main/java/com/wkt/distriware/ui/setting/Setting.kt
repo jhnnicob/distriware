@@ -12,12 +12,13 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.wkt.distriware.constant.Constant
 
 @Composable
 fun SettingScreen(onclick: (String, String) -> Unit) {
 
-    val settingViewModel: SettingViewModel = viewModel()
+    val settingViewModel: SettingViewModel = hiltViewModel()
     val serverAddress = settingViewModel.serverAddress.collectAsState()
     val port = settingViewModel.port.collectAsState()
 
@@ -30,9 +31,9 @@ fun SettingScreen(onclick: (String, String) -> Unit) {
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Text(text = "Server")
+            Text(text = Constant.SERVER_ADDRESS_TEXT)
             Text(text = serverAddress.value.toString(), Modifier.clickable {
-                onclick("Server", serverAddress.value.toString())
+                onclick(Constant.SERVER_ADDRESS_TEXT, serverAddress.value.toString())
             })
         }
 
@@ -42,9 +43,9 @@ fun SettingScreen(onclick: (String, String) -> Unit) {
                 .padding(top = 15.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Text(text = "Port")
+            Text(text = Constant.PORT_NUMBER_TEXT)
             Text(text = port.value.toString(), modifier = Modifier.clickable {
-                onclick("Port", port.value.toString())
+                onclick(Constant.PORT_NUMBER_TEXT, port.value.toString())
             })
         }
     }
