@@ -1,11 +1,12 @@
 package com.wkt.distriware.domain.usecase.setting
 
 import com.wkt.distriware.data.repository.ConfigSettingRepository
-import com.wkt.distriware.data.repository.impl.ConfigSettingRepositoryImpl
+import kotlinx.coroutines.flow.Flow
 
-class ValidateConfigSettingEmptyUseCase {
-    private val configSetting: ConfigSettingRepository = ConfigSettingRepositoryImpl()
-    fun invoke(): Boolean {
-        return configSetting.isConfigSettingEmpty()
+class ValidateConfigSettingEmptyUseCase(
+    private val configSettingRepository: ConfigSettingRepository
+) {
+    suspend fun invoke(): Flow<Boolean> {
+        return configSettingRepository.isConfigSettingEmpty()
     }
 }
