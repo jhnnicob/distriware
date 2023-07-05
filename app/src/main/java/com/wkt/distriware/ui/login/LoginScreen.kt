@@ -26,27 +26,21 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.wkt.distriware.domain.usecase.setting.ValidateConfigSettingEmptyUseCase
-import com.wkt.distriware.ui.compose.NavDestinations
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "CoroutineCreationDuringComposition")
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class,
-    ExperimentalComposeUiApi::class
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class
 )
 @Composable
 fun LoginScreen(navHostController: NavHostController, onButtonClick: () -> Unit) {
 
     val loginViewModel: LoginViewModel = viewModel()
-
-    val isConfigSettingEmpty = ValidateConfigSettingEmptyUseCase()
 
     val username = loginViewModel.username.collectAsState()
     val password = loginViewModel.password.collectAsState()
@@ -56,13 +50,6 @@ fun LoginScreen(navHostController: NavHostController, onButtonClick: () -> Unit)
 
     val snackState = remember { SnackbarHostState() }
     val snackScope = rememberCoroutineScope()
-
-    if(isConfigSettingEmpty.invoke()) {
-        LaunchedEffect(isConfigSettingEmpty.invoke()) {
-            navHostController.navigate(NavDestinations.SettingScreen)
-        }
-        return
-    }
 
     Box(modifier = Modifier.fillMaxWidth()){
         SnackbarHost(hostState = snackState, Modifier.align(Alignment.BottomCenter))
