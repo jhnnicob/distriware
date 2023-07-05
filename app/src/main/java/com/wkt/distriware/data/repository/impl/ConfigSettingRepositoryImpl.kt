@@ -15,8 +15,8 @@ class ConfigSettingRepositoryImpl @Inject constructor(
         return configSettingDataStore.getConfigSetting()
     }
 
-    override fun getConfigSetting(): ConfigSetting {
-        return configSetting
+    override suspend fun saveConfigSetting(key: String, value: String) {
+        configSettingDataStore.saveConfigSetting(key, value)
     }
 
     override suspend fun isConfigSettingEmpty(): Flow<Boolean> {
