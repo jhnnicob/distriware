@@ -2,10 +2,14 @@ package com.wkt.distriware.ui.setting
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.wkt.distriware.constant.Constant.PORT_NUMBER_TEXT
+import com.wkt.distriware.constant.Constant.SERVER_ADDRESS_TEXT
 import com.wkt.distriware.domain.usecase.ConfigSettingInteractor
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -25,11 +29,15 @@ class SettingViewModel @Inject constructor(
     }
 
     private fun getConfigSetting() {
-        val configSetting = configSettingInteractor.getConfigSettingUseCase()
+        val serverFlow = configSettingInteractor.getConfigSettingUseCase(SERVER_ADDRESS_TEXT)
+        val portFlow = configSettingInteractor.getConfigSettingUseCase(PORT_NUMBER_TEXT)
+        val combinedFlow: Flow<Pair<String?, String?>> = serverFlow.combine(portFlow) { server, port ->
+            server to port
+        }
         viewModelScope.launch {
-            configSetting.collect { config ->
-                _serverAddress.value = config.serverAddress ?: "000.000.000.000"
-                _port.value = config.port ?: "000"
+            combinedFlow.collect { pair ->
+                _serverAddress.value = pair.first
+                _port.value =  pair.second
             }
         }
     }
