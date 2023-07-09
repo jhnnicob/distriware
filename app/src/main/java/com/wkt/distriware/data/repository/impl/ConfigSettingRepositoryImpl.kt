@@ -16,13 +16,4 @@ class ConfigSettingRepositoryImpl @Inject constructor(
     override suspend fun saveConfigSetting(key: String, value: String) {
         configSettingDataStore.saveDataStore(key, value)
     }
-
-    override suspend fun isConfigSettingEmpty(): Flow<Boolean> {
-        val configSettingFlow = configSettingDataStore.getConfigSetting()
-        return configSettingFlow.map { configSetting ->
-            val serverAddress = configSetting.serverAddress
-            val port = configSetting.port
-            serverAddress?.isEmpty() ?: false && port?.isEmpty() ?: false
-        }
-    }
 }
