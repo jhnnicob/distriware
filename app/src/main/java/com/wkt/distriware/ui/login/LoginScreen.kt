@@ -31,6 +31,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import com.wkt.distriware.ui.compose.NavDestinations
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -38,7 +39,10 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class
 )
 @Composable
-fun LoginScreen(navHostController: NavHostController, onButtonClick: () -> Unit) {
+fun LoginScreen(
+    navHostController: NavHostController,
+    onButtonClick: () -> Unit
+) {
 
     val loginViewModel: LoginViewModel = viewModel()
 
