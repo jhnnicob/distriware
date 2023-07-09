@@ -26,7 +26,7 @@ import kotlinx.coroutines.flow.Flow
  * - The `isConfigSettingValid` method checks if the configuration setting is valid and returns a Boolean value.
  */
 interface ConfigSettingRepository {
-    fun getConfigSetting(): Flow<ConfigSetting>
+    fun <T> getDataStore(key: String): Flow<T>
     suspend fun saveConfigSetting(key: String, value: String)
-    suspend fun isConfigSettingEmpty(): Flow<Boolean>
+//    suspend fun isConfigSettingEmpty(): Flow<Boolean>
 }
