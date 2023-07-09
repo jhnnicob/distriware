@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.wkt.distriware.ui.MenuScreen
 import com.wkt.distriware.ui.login.LoginScreen
 import com.wkt.distriware.ui.setting.SettingScreen
 
@@ -32,6 +33,11 @@ fun NavGraph(startDestination: String = NavDestinations.LoginScreen) {
             val fieldName = navBackStackEntry.arguments?.getString("fieldName")
             val fieldValue = navBackStackEntry.arguments?.getString("fieldValue")
             DialogScreen(navController, fieldName.toString(), fieldValue.toString())
+        }
+        composable(NavDestinations.MenuScreen) {
+            MenuScreen(navController, onButtonClick = {
+                navController.navigate(NavDestinations.SettingScreen)
+            })
         }
     }
 }
