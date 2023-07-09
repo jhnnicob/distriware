@@ -9,8 +9,8 @@ class ConfigSettingRepositoryImpl @Inject constructor(
     private val configSettingDataStore: ConfigSettingDataStore
 ): ConfigSettingRepository {
 
-    override fun getConfigSetting(): Flow<ConfigSetting> {
-        return configSettingDataStore.getConfigSetting()
+    override fun <T> getDataStore(key: String): Flow<T> {
+        return configSettingDataStore.getDataStore(key)
     }
 
     override suspend fun saveConfigSetting(key: String, value: String) {
