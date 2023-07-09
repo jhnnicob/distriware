@@ -110,11 +110,6 @@ fun LoginScreen(navHostController: NavHostController, onButtonClick: () -> Unit)
                 }
             }
         }
-
-        if (isSuccess.value) {
-            snackScope.launch { snackState.showSnackbar("Success") }
-            loginViewModel.resetErrorMessage()
-        }
     }
 
     LaunchedEffect(Unit) {
@@ -126,6 +121,12 @@ fun LoginScreen(navHostController: NavHostController, onButtonClick: () -> Unit)
     LaunchedEffect(Unit) {
         loginViewModel.password.collect {
             loginViewModel.updateLoginButtonEnabled()
+        }
+    }
+
+    LaunchedEffect(isSuccess.value) {
+        if (isSuccess.value) {
+            navHostController.navigate(NavDestinations.MenuScreen)
         }
     }
 
