@@ -4,4 +4,5 @@ object NavDestinations {
     const val LoginScreen = "login_screen"
     const val SettingScreen = "setting_screen"
     const val DialogScreen = "dialog_screen"
+    const val MenuScreen = "menu_screen"
 }
